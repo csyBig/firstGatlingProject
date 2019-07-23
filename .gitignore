@@ -137,4 +137,7 @@ modules.xml
 *.class
 *.log
 
+## target directory ##
+target/
+
 # End of https://www.gitignore.io/api/scala,intellij,intellij+iml
