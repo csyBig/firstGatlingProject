@@ -10,8 +10,6 @@ class SomeSamplesTest extends Simulation {
   val httpConf = http.baseUrl("http://localhost:8082")
   val formHeader = Map("content-type" -> "application/x-www-form-urlencoded")
 
-  def paramMap = Map("username" -> "sang", "password" -> "123")
-
 
   // feeder
   object getResultFromFeeder {
@@ -29,9 +27,26 @@ class SomeSamplesTest extends Simulation {
   }
 
 
-  //
+  // post method with body from json file
+  val bodyMap = Map("id" -> 1, "name" -> "csy", "description" -> "ok")
+  object postBodyFromJson {
+    val result = exec(
+      http("the sample of post body")
+        .post("/add/id")
+        .headers(formHeader)
+        .body(RawFileBody("TestData.json")).asJson
+    )
+  }
 
-
+  // post method with body
+  object postBody {
+    val result = exec(
+      http("the sample of post body")
+        .post("/add/id")
+        .headers(formHeader)
+        .body(StringBody("""{"username":"${userName}", "password":"${password}"}"""))
+    )
+  }
 
 
   val scn = scenario("get current user name").exec(getResultFromFeeder.result)
